@@ -7,17 +7,22 @@ from SatGen import generate_3sat_instance
 # print(f"Number of Recursive DPLL Calls: {solver.dpll_count}")
 
 def dpll_run_script(num_vars, num_clauses, num_iterations):
-    calls_list = []
+    num_calls = []
     for i in range(num_iterations):
         solver = DPLLSolver()
         problem = generate_3sat_instance(num_vars,num_clauses)
         solver.solve(problem)
-        calls_list.append(solver.dpll_count)
-    return calls_list
+        num_calls.append(solver.dpll_count)
+    return num_calls
 
 num_vars = 20
-num_clauses = 90
-num_iterations = 10
+num_iterations = 100
 
-calls_list = dpll_run_script(num_vars, num_clauses, num_iterations)
+calls_list = []
+for i in range(2,9):
+    num_clauses = num_vars*i
+    num_calls = dpll_run_script(num_vars, num_clauses, num_iterations)
+    calls_list.append(num_calls)
+
 print(calls_list)
+    

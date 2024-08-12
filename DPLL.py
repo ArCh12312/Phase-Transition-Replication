@@ -36,17 +36,17 @@ class DPLLSolver:
             unit_clause = new_unit_clause
         return formula, model
 
-    def pure_literal_elimination(self, formula, model):
-        while True:
-            literals = {literal for clause in formula for literal in clause}
-            pure_literals = {literal for literal in literals if -literal not in literals}
-            if not pure_literals:
-                break
-            for literal in pure_literals:
-                if literal not in model:
-                    model.append(literal)
-            formula = [clause for clause in formula if not any(literal in clause for literal in pure_literals)]
-        return formula, model
+    # def pure_literal_elimination(self, formula, model):
+    #     while True:
+    #         literals = {literal for clause in formula for literal in clause}
+    #         pure_literals = {literal for literal in literals if -literal not in literals}
+    #         if not pure_literals:
+    #             break
+    #         for literal in pure_literals:
+    #             if literal not in model:
+    #                 model.append(literal)
+    #         formula = [clause for clause in formula if not any(literal in clause for literal in pure_literals)]
+    #     return formula, model
 
     def select_literal(self, formula):
         # JW-One Heuristic
@@ -59,7 +59,7 @@ class DPLLSolver:
     def dpll(self, formula, model = []):
         self.dpll_count += 1
         formula, model = self.unit_propagate(formula, model)
-        formula, model = self.pure_literal_elimination(formula, model)
+        # formula, model = self.pure_literal_elimination(formula, model)
         if formula == []:
             return True, model
         if formula == [[]]:
